@@ -17,13 +17,13 @@ helm show values nats/nats > values.yaml
 ## install chart
 
 ```sh
-helm install -f values.yaml kind-cluster-nats nats/nats
+helm install -f values.yaml nats-helm-kind nats/nats
 ```
 
 ## upgrade chart
 
 ```sh
-helm upgrade -f values.yaml kind-cluster-nats nats/nats
+helm upgrade -f values.yaml nats-helm-kind nats/nats
 ```
 
 # cleanup
@@ -31,11 +31,11 @@ helm upgrade -f values.yaml kind-cluster-nats nats/nats
 ## uninstall chart
 
 ```sh
-helm uninstall kind-cluster-nats
+helm uninstall nats-helm-kind
 ```
 
 ## remove cluster
 
 ```sh
-kind delete cluster --name kind-cluster-nats
+kind delete cluster --name nats-helm-kind
 ```
