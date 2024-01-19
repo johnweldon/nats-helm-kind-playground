@@ -370,11 +370,20 @@ container:
   #         secretKeyRef:
   #           name: nats-auth
   #           key: token
-  env: {}
+  env:
+    GOMEMLIMIT: 4GiB
 
   # merge or patch the container
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
-  merge: {}
+  merge:
+    resources:
+      requests:
+        cpu: "2"
+        memory: 6Gi
+      limits:
+        cpu: "2"
+        memory: 6Gi
+
   patch: []
 
 ############################################################
