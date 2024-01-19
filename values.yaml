@@ -303,7 +303,38 @@ config:
   #   "server_name": "nats",
   #   include ./my-config-last.conf;
   # }
-  merge: {}
+  merge:
+    accounts:
+      << $SYS >>:
+        users:
+          - user: admin
+            password: admin
+      A:
+        jetstream: enabled
+        users:
+          - user: a1
+            password: a1
+          - user: a2
+            password: a2
+      B:
+        jetstream: enabled
+        users:
+          - user: b1
+            password: b1
+          - user: b2
+            password: b2
+      DEFAULT:
+        jetstream: enabled
+        users:
+          - user: default
+            password: default
+    no_auth_user: default
+    system_account: "$SYS"
+    authorization:
+      default_permissions:
+        publish: ">"
+        subscribe: ">"
+
   patch: []
 
 ############################################################
@@ -522,6 +553,16 @@ natsBox:
   # NATS contexts
   ############################################################
   contexts:
+    admin:
+      merge: { user: admin, password: admin }
+    a1:
+      merge: { user: a1, password: a1 }
+    a2:
+      merge: { user: a2, password: a2 }
+    b1:
+      merge: { user: b1, password: b1 }
+    b2:
+      merge: { user: b2, password: b2 }
     default:
       creds:
         # set contents in order to create a secret with the creds file contents
@@ -550,11 +591,11 @@ natsBox:
 
       # merge or patch the context
       # https://docs.nats.io/using-nats/nats-tools/nats_cli#nats-contexts
-      merge: {}
+      merge: { user: default, password: default }
       patch: []
 
   # name of context to select by default
-  defaultContextName: default
+  defaultContextName: admin
 
   ############################################################
   # deployment -> pod template -> nats-box container
