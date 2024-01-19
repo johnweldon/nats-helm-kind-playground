@@ -49,7 +49,7 @@ tlsCA:
 ############################################################
 config:
   cluster:
-    enabled: false
+    enabled: true
     port: 6222
     # must be 2 or higher when jetstream is enabled
     replicas: 3
@@ -82,7 +82,7 @@ config:
     patch: []
 
   jetstream:
-    enabled: false
+    enabled: true
 
     fileStore:
       enabled: true
@@ -363,7 +363,7 @@ reloader:
   # all nats container volume mounts with the following prefixes
   # will be mounted into the reloader container
   natsVolumeMountPrefixes:
-  - /etc/
+    - /etc/
 
   # merge or patch the container
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#container-v1-core
@@ -403,7 +403,6 @@ promExporter:
     patch: []
     # defaults to "{{ include "nats.fullname" $ }}"
     name:
-
 
 ############################################################
 # service
@@ -510,7 +509,6 @@ serviceAccount:
   patch: []
   # defaults to "{{ include "nats.fullname" $ }}"
   name:
-
 
 ############################################################
 # natsBox
@@ -624,7 +622,6 @@ natsBox:
     # defaults to "{{ include "nats.fullname" $ }}-box"
     name:
 
-
 ################################################################################
 # Extra user-defined resources
 ################################################################################
@@ -667,4 +664,3 @@ natsBox:
 #                 {{ .Values.config.websocket.port }}
 #
 extraResources: []
-
