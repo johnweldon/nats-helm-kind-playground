@@ -496,7 +496,10 @@ podTemplate:
   #   kubernetes.io/hostname:
   #     maxSkew: 1
   #
-  topologySpreadConstraints: {}
+  topologySpreadConstraints:
+    kubernetes.io/hostname:
+      maxSkew: 1
+      whenUnsatisfiable: DoNotSchedule
 
   # merge or patch the pod template
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#pod-v1-core
