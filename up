@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+NAME="nats-helm-kind"
+
+if ! kubectl get node "${NAME}-control-plane" >/dev/null 2>&1 ; then
+  kind create cluster --config=cluster-config.yaml
+fi
+
+if ! helm repo update nats >/dev/null 2>&1 ; then
+  helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+fi
+
+if [ ! -f values.yaml ] ; then
+  helm show values nats/nats > values.yaml
+fi
+
+if ! helm get metadata "${NAME}" >/dev/null 2>&1 ; then
+  helm install -f values.yaml "${NAME}" nats/nats
+else
+  helm upgrade -f values.yaml "${NAME}" nats/nats
+fi

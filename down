@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+NAME="nats-helm-kind"
+
+if helm get metadata "${NAME}" >/dev/null 2>&1 ; then
+  helm uninstall "${NAME}"
+fi
+
+if kubectl get node "${NAME}-control-plane" >/dev/null 2>&1 ; then
+  kind delete cluster --name "${NAME}"
+fi
